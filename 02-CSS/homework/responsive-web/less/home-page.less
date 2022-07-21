@@ -12,6 +12,11 @@
       padding:0 15px;
     }
 
+    img {
+      .borderImg();
+      margin-top: 7px;
+    }
+
   }
 
   .music-images {
@@ -58,6 +63,17 @@
       }
 
       .btn {
+        .boton(@btn-bg-color, @wild-sand);
+        border: 1px solid @btn-bg-color;
+        display: inline-block;
+        padding: 10px;
+        .borderImg(8px);
+        transition: background-color .3s;
+      }
+
+      .btn:hover{
+        .boton(@wild-sand, @btn-bg-color);
+        border: 1px solid @btn-bg-color;
       }
     }
 
@@ -72,4 +88,5 @@
       }
     }
   }
+  
 }

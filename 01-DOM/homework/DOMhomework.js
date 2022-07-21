@@ -53,13 +53,15 @@ function buildToDo(todo, index) {
   // Tu código acá:
   var toDoShell = document.createElement('div');
   toDoShell.className = 'toDoShell'
-  let toDoText = document.createElement('span');
-  toDoText.innerHTML = todo['description'];
+  var toDoText = document.createElement('span');
+  toDoText.innerHTML = todo.description;
   toDoText.id = index
-  if (todo.complete === true){
+  if (todo.complete){
     toDoText.className = 'completeText';
   }
   toDoShell.appendChild(toDoText);
+
+  toDoText.addEventListener('click', completeToDo)
 
   return toDoShell;
 }
@@ -71,11 +73,7 @@ function buildToDo(todo, index) {
 
 function buildToDos(toDos) {
   // Tu código acá:
-  let newA = toDos.map(function(x){
-    size = -1;
-    size++;
-    return buildToDo(x, size)
-  })
+  let newA = toDos.map(buildToDo)
   return newA;
 }
 
@@ -91,12 +89,12 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
-  var toDoContainer = document.querySelector('#toDoContainer')
-  toDoContainer.innerHTML = "";
-  let XD = buildToDos(toDoItems);
-  for (let i = 0; i < XD.length ;i++){
-    toDoContainer.appendChild(document.querySelectorAll(XD))
-  }
+  let toDoContainer = document.querySelector('#toDoContainer')
+  toDoContainer.innerHTML = '';
+  let aux = buildToDos(toDoItems);
+  aux.forEach(element => {
+    toDoContainer.appendChild(element)
+  });
 }
 
 
@@ -111,9 +109,10 @@ function displayToDos() {
 
 function addToDo() {
   // Tu código acá:
-  let XD = new ToDo(toDoInput.value)
+  let save = document.getElementById('toDoInput')
+  let XD = new ToDo(save.value)
   toDoItems.push(XD)
-  toDoInput.innerHTML = "";
+  save.value = '';
 }
 
 // Agregar un 'Event Listener' para que cada vez que el botón 'AGREGAR' sea clickeado
@@ -123,7 +122,7 @@ function addToDo() {
 
 // Tu código acá:
 let XDXD = document.querySelector('#addButton');
-XDXD.addEventListener('click', addToDo());
+XDXD.addEventListener('click', addToDo);
 
 // La función completeToDo se va a ejecutar cuando queramos completar un todo
 // [NOTA: Algunas cuestiones a tener en cuenta
@@ -139,10 +138,10 @@ XDXD.addEventListener('click', addToDo());
 
 function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
-  // const index = event.target.id;
+  const index = event.target.id;
   // Tu código acá:
-  //completeToDo(index)
-  //displayToDos()
+  toDoItems[index].completeToDo()
+  displayToDos();
 }
 
 // Una vez que llegaste a este punto verificá que todos los tests pasen
